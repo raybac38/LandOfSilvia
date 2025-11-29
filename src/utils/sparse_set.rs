@@ -15,7 +15,7 @@ impl<T> SparseSet<T> {
         }
     }
 
-    fn insert(& mut self, element: T, index: usize) {
+    pub fn insert(& mut self, element: T, index: usize) {
         let dense_index = self.find_free_place_in_dense();
         self.dense[dense_index] = Some(element);
 
@@ -25,9 +25,18 @@ impl<T> SparseSet<T> {
         self.sparse[index] = Some(dense_index);
     }
     
-    fn get(&self, index : usize) -> Option<&T> {
+    pub fn get(&self, index : usize) -> Option<&T> {
         let dense_index = self.sparse.get(index)?.as_ref()?;
         self.dense.get(*dense_index)?.as_ref()
+    }
+
+    pub fn iter(&self, f : impl Fn(&T)){
+        for i in &self.dense {
+            match i {
+                None => (),
+                Some(k) => f(k)
+            }
+        }
     }
 
     fn find_free_place_in_dense(& mut self) -> usize {
@@ -41,5 +50,9 @@ impl<T> SparseSet<T> {
         index
     }
 
+
+
     
 }
+
+

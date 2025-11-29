@@ -1,15 +1,19 @@
-use raylib::prelude::RaylibDrawHandle;
+use raylib::{models::Model, prelude::RaylibDrawHandle};
 
-use crate::system::transform_system::{TransformSystem};
+use crate::{system::transform_system::TransformSystem, utils::sparse_set::SparseSet};
 
 
 pub struct RenderSystem {
     transform_system : TransformSystem,
+    models : SparseSet<Model>
 }
 
 impl RenderSystem {
-    pub fn new(ts : TransformSystem) -> Self {
-        return RenderSystem { transform_system: (ts) }
+    pub fn new(transform_system : TransformSystem) -> Self {
+        return RenderSystem { 
+            transform_system: (transform_system),
+            models : SparseSet::new()
+        }
     }
 
     /*
