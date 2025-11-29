@@ -1,14 +1,12 @@
+use crate::system::{render_system::RenderSystem, transform_system::TransformSystem};
 
-mod render;
+
+mod component;
+mod system;
+mod utils;
 
 fn main() {
-    let (mut rl, thread) = raylib::init()
-        .size(640, 480)
-        .title("Hello, World")
-        .build();
-     
-    while !rl.window_should_close() {
-        let d = rl.begin_drawing(&thread);
-        render::update(d);
-    }
+    let transform_system = TransformSystem::new();
+    let render_system = RenderSystem::new(transform_system);
+
 }
